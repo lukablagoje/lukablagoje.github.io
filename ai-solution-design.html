@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AI Solution Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Design an AI app concept by selecting Problem, Data, Intelligence, and UI." />
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #142335 0%, #0b0f14 50%, #090d12 100%);
+      color: #e7eef7;
+    }
+
+    main {
+      width: min(1160px, 95vw);
+      margin: 0 auto;
+      padding: 34px 0 56px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.75rem, 2.4vw, 2.5rem);
+    }
+
+    .muted { color: #b4c5d7; }
+
+    .layout {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: minmax(320px, 1fr) minmax(360px, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid #2a3f56;
+      border-radius: 16px;
+      background: rgba(9, 16, 24, 0.86);
+      padding: 20px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.3);
+    }
+
+    .field { margin-bottom: 14px; }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 650;
+      font-size: 1.02rem;
+    }
+
+    select {
+      width: 100%;
+      border: 1px solid #35506a;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #0f1a26;
+      color: #e7eef7;
+      font-size: 1rem;
+    }
+
+    .helper {
+      margin-top: 14px;
+      color: #96a9bc;
+      font-size: 0.93rem;
+    }
+
+    .preview-window {
+      border: 1px solid #35506a;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #101a25;
+      min-height: 410px;
+    }
+
+    .window-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid #2f455a;
+      background: #0b1621;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .dot.red { background: #fb7185; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.green { background: #34d399; }
+
+    .preview-content {
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid #35506a;
+      background: #102233;
+      color: #c0d6ea;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      padding: 4px 8px;
+    }
+
+    .box {
+      border: 1px solid #35506a;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #172a3b 0%, #101924 100%);
+      padding: 12px;
+    }
+
+    .box h2 {
+      margin: 0 0 6px;
+      font-size: 1.02rem;
+    }
+
+    .box p {
+      margin: 0;
+      color: #bfd1e2;
+    }
+
+    .dynamic-preview { min-height: 130px; }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tile {
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid #35506a;
+      background: #203a52;
+    }
+
+    .pbi-title {
+      font-weight: 700;
+      color: #e4eef9;
+      margin-bottom: 8px;
+    }
+
+    .pbi-top-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .pbi-card {
+      border-radius: 9px;
+      border: 1px solid #40617e;
+      background: #11293d;
+      padding: 8px;
+      font-size: 0.78rem;
+      color: #b5cde2;
+      min-height: 54px;
+    }
+
+    .pbi-chart {
+      height: 82px;
+      border-radius: 10px;
+      border: 1px solid #40617e;
+      background: linear-gradient(180deg, #163248 0%, #112538 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pbi-bar {
+      position: absolute;
+      bottom: 10px;
+      width: 10%;
+      border-radius: 6px 6px 0 0;
+      background: #59b3f0;
+    }
+
+    .phone-shell {
+      width: min(235px, 92%);
+      margin: 0 auto;
+      background: #071018;
+      border: 2px solid #3a5169;
+      border-radius: 28px;
+      padding: 12px 11px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+    }
+
+    .phone-notch {
+      width: 42%;
+      height: 16px;
+      border-radius: 0 0 10px 10px;
+      background: #0d1d2c;
+      margin: -12px auto 10px;
+      border: 1px solid #30485e;
+      border-top: none;
+    }
+
+    .phone-screen {
+      border: 1px solid #39546e;
+      border-radius: 20px;
+      padding: 10px;
+      background: linear-gradient(180deg, #152739, #0e1b29);
+      min-height: 200px;
+    }
+
+    .phone-pill {
+      height: 8px;
+      border-radius: 999px;
+      background: #2a4a66;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #c9daea;
+    }
+
+    a { color: #7dd3fc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>AI Solution Design</h1>
+    <p class="muted">
+      Select <strong>Problem</strong>, <strong>Data</strong>, <strong>Intelligence</strong>, and <strong>UI</strong> to generate a suggested app, website, or platform concept.
+    </p>
+
+    <div class="layout">
+      <section class="panel" aria-label="Design Controls">
+        <div class="field">
+          <label for="problem">1) Problem</label>
+          <select id="problem">
+            <option value="customer-support">Customer Support Automation</option>
+            <option value="fraud">Fraud Detection</option>
+            <option value="sales-forecast">Sales Forecasting</option>
+            <option value="document">Document Intelligence</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="data">2) Data</label>
+          <select id="data">
+            <option value="structured">Structured Tables / SQL</option>
+            <option value="mixed">Mixed (Text + Structured)</option>
+            <option value="stream">Real-Time Event Stream</option>
+            <option value="docs">PDFs, Emails, and Docs</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="intelligence">3) Intelligence</label>
+          <select id="intelligence">
+            <option value="llm">LLM + RAG Assistant</option>
+            <option value="predictive">Predictive ML Models</option>
+            <option value="rules">Rules + Anomaly Engine</option>
+            <option value="agentic">Agentic Workflow</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="ui">4) UI</label>
+          <select id="ui">
+            <option value="web-app">Web Application</option>
+            <option value="website">Website</option>
+            <option value="mobile">Mobile Application</option>
+            <option value="power-bi">Power BI Dashboard</option>
+            <option value="platform">Analytics Platform</option>
+          </select>
+        </div>
+
+        <p class="helper">The preview updates automatically as soon as you change any dropdown.</p>
+      </section>
+
+      <section class="panel" aria-label="Preview Window">
+        <div class="preview-window" role="status" aria-live="polite">
+          <div class="window-top">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <strong id="windowLabel" style="margin-left:8px; font-size:0.92rem;">Preview</strong>
+          </div>
+          <div class="preview-content">
+            <div class="box">
+              <h2 id="solutionName"></h2>
+              <p id="solutionDesc"></p>
+            </div>
+            <div class="box dynamic-preview" id="dynamicPreview"></div>
+            <div class="box">
+              <h2>Core Capabilities</h2>
+              <ul id="featureList"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <p class="muted" style="margin-top: 22px;"><a href="index.html">Back to Home</a></p>
+  </main>
+
+  <script>
+    const controls = {
+      problem: document.getElementById('problem'),
+      data: document.getElementById('data'),
+      intelligence: document.getElementById('intelligence'),
+      ui: document.getElementById('ui')
+    };
+
+    const solutionName = document.getElementById('solutionName');
+    const solutionDesc = document.getElementById('solutionDesc');
+    const featureList = document.getElementById('featureList');
+    const dynamicPreview = document.getElementById('dynamicPreview');
+    const windowLabel = document.getElementById('windowLabel');
+
+    function titleize(value) {
+      return value.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+
+    function getSolutionType(ui) {
+      if (ui === 'power-bi') return 'Power BI Dashboard';
+      if (ui === 'mobile') return 'Mobile Application';
+      if (ui === 'website') return 'Website';
+      if (ui === 'platform') return 'Platform';
+      return 'Web Application';
+    }
+
+    function buildConcept(problem, data, intelligence, ui) {
+      const solutionType = getSolutionType(ui);
+      const name = `${titleize(problem)} ${solutionType}`;
+      const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built with ${titleize(data).toLowerCase()} data.`;
+
+      const features = [
+        `Live ${titleize(problem)} workflows with clear priority scoring`,
+        `${titleize(data)} ingestion pipeline with governance checks`,
+        `${titleize(intelligence)} decision engine with explainability`,
+        `${solutionType} experience with role-based actions and alerts`
+      ];
+
+      return { name, description, features, solutionType };
+    }
+
+    function buildPowerBIPreview() {
+      return `
+        <div class="pbi-title">Power BI Dashboard Mockup</div>
+        <div class="pbi-top-row">
+          <div class="pbi-card"><strong>KPI 1</strong><br/>Conversion</div>
+          <div class="pbi-card"><strong>KPI 2</strong><br/>Avg. Handle Time</div>
+          <div class="pbi-card"><strong>KPI 3</strong><br/>Escalations</div>
+        </div>
+        <div class="pbi-chart">
+          <span class="pbi-bar" style="left:8%;height:28px"></span>
+          <span class="pbi-bar" style="left:22%;height:52px"></span>
+          <span class="pbi-bar" style="left:36%;height:36px"></span>
+          <span class="pbi-bar" style="left:50%;height:60px"></span>
+          <span class="pbi-bar" style="left:64%;height:40px"></span>
+          <span class="pbi-bar" style="left:78%;height:67px"></span>
+        </div>
+      `;
+    }
+
+    function buildMobilePreview() {
+      return `
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-pill" style="width: 68%;"></div>
+            <div class="phone-pill" style="width: 100%; height: 54px; border-radius: 10px;"></div>
+            <div class="phone-pill" style="width: 82%;"></div>
+            <div class="phone-pill" style="width: 92%;"></div>
+            <div class="phone-pill" style="width: 58%;"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildGenericPreview(solutionType) {
+      return `
+        <div class="pbi-title">${solutionType} Mockup</div>
+        <div class="mini-grid">
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+        </div>
+      `;
+    }
+
+    function render() {
+      const selected = {
+        problem: controls.problem.value,
+        data: controls.data.value,
+        intelligence: controls.intelligence.value,
+        ui: controls.ui.value
+      };
+
+      const concept = buildConcept(selected.problem, selected.data, selected.intelligence, selected.ui);
+      solutionName.textContent = concept.name;
+      solutionDesc.textContent = concept.description;
+      windowLabel.textContent = `${concept.solutionType} Preview`;
+
+      if (selected.ui === 'power-bi') {
+        dynamicPreview.innerHTML = buildPowerBIPreview();
+      } else if (selected.ui === 'mobile') {
+        dynamicPreview.innerHTML = buildMobilePreview();
+      } else {
+        dynamicPreview.innerHTML = buildGenericPreview(concept.solutionType);
+      }
+
+      featureList.innerHTML = '';
+      concept.features.forEach((feature) => {
+        const li = document.createElement('li');
+        li.textContent = feature;
+        featureList.appendChild(li);
+      });
+    }
+
+    Object.values(controls).forEach((control) => control.addEventListener('change', render));
+    render();
+  </script>
+</body>
+</html>
