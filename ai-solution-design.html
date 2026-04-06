@@ -6,75 +6,178 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Design an AI app concept by selecting Problem, Data, Intelligence, and UI." />
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       background: radial-gradient(circle at top, #142335 0%, #0b0f14 50%, #090d12 100%);
       color: #e7eef7;
+      min-height: 100vh;
     }
 
     main {
-      width: min(1160px, 95vw);
+      width: min(1150px, 95vw);
       margin: 0 auto;
-      padding: 34px 0 56px;
+      padding: 36px 0 56px;
     }
 
     h1 {
       margin: 0 0 8px;
-      font-size: clamp(1.75rem, 2.4vw, 2.5rem);
+      font-size: clamp(1.7rem, 2.2vw, 2.4rem);
     }
 
-    .muted { color: #b4c5d7; }
+    .muted {
+      color: #afc1d4;
+      margin-bottom: 26px;
+    }
+
+    .analogy {
+      margin: -14px 0 28px;
+      color: #c9d9ea;
+      font-size: 0.98rem;
+      max-width: 980px;
+    }
 
     .layout {
-      margin-top: 20px;
       display: grid;
-      grid-template-columns: minmax(320px, 1fr) minmax(360px, 1fr);
+      grid-template-columns: minmax(320px, 1fr) minmax(330px, 1fr);
       gap: 24px;
       align-items: start;
     }
 
     .panel {
       border: 1px solid #2a3f56;
-      border-radius: 16px;
-      background: rgba(9, 16, 24, 0.86);
+      border-radius: 14px;
+      background: rgba(10, 16, 24, 0.85);
+      backdrop-filter: blur(2px);
       padding: 20px;
-      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
     }
 
-    .field { margin-bottom: 14px; }
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
 
     label {
-      display: block;
-      margin-bottom: 8px;
       font-weight: 650;
-      font-size: 1.02rem;
+      color: #d8e4f3;
     }
 
     select {
       width: 100%;
-      border: 1px solid #35506a;
       border-radius: 10px;
+      border: 1px solid #35506a;
       padding: 10px 12px;
       background: #0f1a26;
       color: #e7eef7;
-      font-size: 1rem;
+      font-size: 0.98rem;
     }
 
     .helper {
-      margin-top: 14px;
+      margin: 12px 0 0;
       color: #96a9bc;
-      font-size: 0.93rem;
+      font-size: 0.92rem;
     }
 
-    .preview-window {
+    .choice-graphic {
+      margin-top: 6px;
+      border: 1px dashed #3c5570;
+      border-radius: 10px;
+      background: #0d1824;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice-graphic small {
+      color: #9cb2c9;
+      font-size: 0.8rem;
+      letter-spacing: 0.01em;
+    }
+
+    .graphic-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      min-height: 26px;
+    }
+
+    .bar {
+      width: 14px;
+      border-radius: 5px 5px 2px 2px;
+      background: #345574;
+    }
+
+    .puzzle-top {
+      margin-bottom: 14px;
+      border: 1px solid #304457;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #0c1723 0%, #0a141f 100%);
+      padding: 12px;
+    }
+
+    .puzzle-title {
+      margin: 0 0 10px;
+      font-size: 0.88rem;
+      color: #acc4dc;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .puzzle-wrap {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #problemShape {
+      width: 88px;
+      height: 68px;
+      border-radius: 10px;
       border: 1px solid #35506a;
+      background: #0f1d2a;
+    }
+
+    .puzzle-pieces {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(40px, 1fr));
+      gap: 8px;
+    }
+
+    .piece {
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid #35506a;
+      display: grid;
+      place-items: center;
+      font-size: 0.72rem;
+      color: #d6e8fa;
+      font-weight: 700;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .piece.problem { background: #32506b; }
+    .piece.data { background: #2a4c66; }
+    .piece.intelligence { background: #365f86; }
+    .piece.ui { background: #426d98; }
+
+    .app-window {
+      border: 1px solid #3a516a;
       border-radius: 12px;
       overflow: hidden;
-      background: #101a25;
-      min-height: 410px;
+      background: #121b26;
+      min-height: 370px;
+      transition: all 220ms ease;
     }
 
     .window-top {
@@ -82,7 +185,7 @@
       align-items: center;
       gap: 8px;
       padding: 10px 12px;
-      border-bottom: 1px solid #2f455a;
+      border-bottom: 1px solid #304457;
       background: #0b1621;
     }
 
@@ -97,10 +200,10 @@
     .dot.yellow { background: #f59e0b; }
     .dot.green { background: #34d399; }
 
-    .preview-content {
-      padding: 14px;
+    .window-body {
+      padding: 16px;
       display: grid;
-      gap: 12px;
+      gap: 14px;
     }
 
     .chip-row {
@@ -112,131 +215,100 @@
     .chip {
       border: 1px solid #35506a;
       background: #102233;
-      color: #c0d6ea;
+      color: #b7d0e7;
+      padding: 4px 9px;
       border-radius: 999px;
       font-size: 0.78rem;
-      padding: 4px 8px;
     }
 
-    .box {
+    .preview-box {
       border: 1px solid #35506a;
       border-radius: 10px;
       background: linear-gradient(180deg, #172a3b 0%, #101924 100%);
       padding: 12px;
     }
 
-    .box h2 {
+    .preview-title {
       margin: 0 0 6px;
-      font-size: 1.02rem;
+      font-size: 1rem;
     }
 
-    .box p {
+    .preview-desc {
       margin: 0;
-      color: #bfd1e2;
+      color: #b8ccdf;
+      font-size: 0.92rem;
     }
 
-    .dynamic-preview { min-height: 130px; }
-
-    .mini-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .tile {
-      height: 28px;
-      border-radius: 8px;
-      border: 1px solid #35506a;
-      background: #203a52;
-    }
-
-    .pbi-title {
-      font-weight: 700;
-      color: #e4eef9;
-      margin-bottom: 8px;
-    }
-
-    .pbi-top-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .pbi-card {
-      border-radius: 9px;
-      border: 1px solid #40617e;
-      background: #11293d;
-      padding: 8px;
-      font-size: 0.78rem;
-      color: #b5cde2;
-      min-height: 54px;
-    }
-
-    .pbi-chart {
-      height: 82px;
+    #uiMock {
+      border: 1px solid #34506a;
       border-radius: 10px;
-      border: 1px solid #40617e;
-      background: linear-gradient(180deg, #163248 0%, #112538 100%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .pbi-bar {
-      position: absolute;
-      bottom: 10px;
-      width: 10%;
-      border-radius: 6px 6px 0 0;
-      background: #59b3f0;
-    }
-
-    .phone-shell {
-      width: min(235px, 92%);
-      margin: 0 auto;
-      background: #071018;
-      border: 2px solid #3a5169;
-      border-radius: 28px;
-      padding: 12px 11px;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
-    }
-
-    .phone-notch {
-      width: 42%;
-      height: 16px;
-      border-radius: 0 0 10px 10px;
-      background: #0d1d2c;
-      margin: -12px auto 10px;
-      border: 1px solid #30485e;
-      border-top: none;
-    }
-
-    .phone-screen {
-      border: 1px solid #39546e;
-      border-radius: 20px;
       padding: 10px;
-      background: linear-gradient(180deg, #152739, #0e1b29);
-      min-height: 200px;
+      display: grid;
+      gap: 8px;
+      background: #0d1b29;
     }
 
-    .phone-pill {
+    .mock-line {
       height: 8px;
       border-radius: 999px;
-      background: #2a4a66;
-      margin-bottom: 8px;
+      background: #406788;aa
+      opacity: 0.85;
+    }
+
+    .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .mock-cell {
+      height: 30px;
+      border-radius: 7px;
+      background: #1e3448;
+      border: 1px solid #35506a;
+    }
+
+    .app-window.ui-web-app {
+      background: linear-gradient(180deg, #12202f 0%, #0f1822 100%);
+    }
+
+    .app-window.ui-customer-portal {
+      background: linear-gradient(180deg, #2a1b29 0%, #1a1320 100%);
+      border-color: #734375;
+    }
+
+    .app-window.ui-mobile {
+      max-width: 360px;
+      margin: 0 auto;
+      border-radius: 26px;
+      border-width: 2px;
+      background: linear-gradient(180deg, #151824 0%, #0c0f16 100%);
+    }
+
+    .app-window.ui-platform {
+      background: linear-gradient(180deg, #11281f 0%, #0d1714 100%);
+      border-color: #3b7360;
     }
 
     ul {
       margin: 0;
       padding-left: 20px;
-      color: #c9daea;
+      color: #c7d8ea;
     }
 
-    a { color: #7dd3fc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
 
     @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -245,6 +317,9 @@
     <h1>AI Solution Design</h1>
     <p class="muted">
       Select <strong>Problem</strong>, <strong>Data</strong>, <strong>Intelligence</strong>, and <strong>UI</strong> to generate a suggested app, website, or platform concept.
+    </p>
+    <p class="analogy">
+      Designing AI solutions is like solving a puzzle. The problem gives you the shape you need to achieve, but it is your choice on the color of the pieces you want to combine.
     </p>
 
     <div class="layout">
@@ -257,6 +332,7 @@
             <option value="sales-forecast">Sales Forecasting</option>
             <option value="document">Document Intelligence</option>
           </select>
+          <div class="choice-graphic" id="problemGraphic"></div>
         </div>
 
         <div class="field">
@@ -267,6 +343,7 @@
             <option value="stream">Real-Time Event Stream</option>
             <option value="docs">PDFs, Emails, and Docs</option>
           </select>
+          <div class="choice-graphic" id="dataGraphic"></div>
         </div>
 
         <div class="field">
@@ -277,39 +354,54 @@
             <option value="rules">Rules + Anomaly Engine</option>
             <option value="agentic">Agentic Workflow</option>
           </select>
+          <div class="choice-graphic" id="intelligenceGraphic"></div>
         </div>
 
         <div class="field">
           <label for="ui">4) UI</label>
           <select id="ui">
-            <option value="web-app">Web Application</option>
-            <option value="website">Website</option>
-            <option value="mobile">Mobile Application</option>
+            <option value="web-app">Internal Web App</option>
             <option value="power-bi">Power BI Dashboard</option>
-            <option value="platform">Analytics Platform</option>
+            <option value="mobile-app">Mobile Application</option>
           </select>
+          <div class="choice-graphic" id="uiGraphic"></div>
         </div>
 
-        <p class="helper">The preview updates automatically as soon as you change any dropdown.</p>
+        <p class="helper">
+          The preview updates automatically as soon as you change any dropdown.
+        </p>
       </section>
 
       <section class="panel" aria-label="Preview Window">
-        <div class="preview-window" role="status" aria-live="polite">
+        <div class="puzzle-top">
+          <p class="puzzle-title">Solution Puzzle</p>
+          <div class="puzzle-wrap">
+            <svg id="problemShape" viewBox="0 0 120 80" aria-label="Problem shape preview"></svg>
+            <div class="puzzle-pieces">
+              <div class="piece problem" id="pieceProblem">P</div>
+              <div class="piece data" id="pieceData">D</div>
+              <div class="piece intelligence" id="pieceIntelligence">I</div>
+              <div class="piece ui" id="pieceUi">UI</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-window ui-web-app" id="appWindow" role="status" aria-live="polite">
           <div class="window-top">
             <span class="dot red"></span>
             <span class="dot yellow"></span>
             <span class="dot green"></span>
-            <strong id="windowLabel" style="margin-left:8px; font-size:0.92rem;">Solution Preview</strong>
+            <strong id="windowLabel" style="margin-left:8px; font-size:0.9rem;">Generated Concept</strong>
           </div>
-          <div class="preview-content">
+          <div class="window-body">
             <div class="chip-row" id="selectionSummary"></div>
-            <div class="box">
-              <h2 id="solutionName"></h2>
-              <p id="solutionDesc"></p>
+            <div class="preview-box">
+              <h2 class="preview-title" id="solutionName"></h2>
+              <p class="preview-desc" id="solutionDesc"></p>
             </div>
-            <div class="box dynamic-preview" id="dynamicPreview"></div>
-            <div class="box">
-              <h2>Core Capabilities</h2>
+            <div id="uiMock"></div>
+            <div class="preview-box">
+              <h2 class="preview-title">Core Capabilities</h2>
               <ul id="featureList"></ul>
             </div>
           </div>
@@ -317,7 +409,9 @@
       </section>
     </div>
 
-    <p class="muted" style="margin-top: 22px;"><a href="index.html">Back to Home</a></p>
+    <p class="muted" style="margin-top:22px;">
+      <a href="index.html">← Back to Home</a>
+    </p>
   </main>
 
   <script>
@@ -332,82 +426,150 @@
     const solutionName = document.getElementById('solutionName');
     const solutionDesc = document.getElementById('solutionDesc');
     const featureList = document.getElementById('featureList');
-    const dynamicPreview = document.getElementById('dynamicPreview');
     const windowLabel = document.getElementById('windowLabel');
+    const appWindow = document.getElementById('appWindow');
+    const problemShape = document.getElementById('problemShape');
+    const uiMock = document.getElementById('uiMock');
+
+    const graphics = {
+      problem: document.getElementById('problemGraphic'),
+      data: document.getElementById('dataGraphic'),
+      intelligence: document.getElementById('intelligenceGraphic'),
+      ui: document.getElementById('uiGraphic')
+    };
+
+    const pieces = {
+      problem: document.getElementById('pieceProblem'),
+      data: document.getElementById('pieceData'),
+      intelligence: document.getElementById('pieceIntelligence'),
+      ui: document.getElementById('pieceUi')
+    };
+
+    const problemShapes = {
+      'customer-support': 'M20 40 Q20 16 44 16 L70 16 Q94 16 94 40 Q94 64 70 64 L44 64 Q20 64 20 40 Z',
+      fraud: 'M18 22 L84 22 L102 40 L84 58 L18 58 L30 40 Z',
+      'sales-forecast': 'M18 58 L34 20 L58 48 L78 24 L100 58 Z',
+      document: 'M24 16 H74 L96 36 V64 H24 Z'
+    };
+
+    const colorPalette = {
+      problem: {
+        'customer-support': '#38bdf8',
+        fraud: '#f97316',
+        'sales-forecast': '#a78bfa',
+        document: '#2dd4bf'
+      },
+      data: {
+        structured: '#60a5fa',
+        mixed: '#22d3ee',
+        stream: '#34d399',
+        docs: '#f59e0b'
+      },
+      intelligence: {
+        llm: '#a78bfa',
+        predictive: '#f472b6',
+        rules: '#fb7185',
+        agentic: '#4ade80'
+      },
+      ui: {
+        'web-app': '#38bdf8',
+        'customer-portal': '#f472b6',
+        mobile: '#facc15',
+        platform: '#34d399'
+      }
+    };
+
+    const graphicPresets = {
+      problem: {
+        'customer-support': { text: 'Ticket triage flow', bars: [22, 14, 26, 12] },
+        fraud: { text: 'Risk spike heatmap', bars: [10, 24, 28, 16] },
+        'sales-forecast': { text: 'Demand trend curve', bars: [12, 18, 22, 28] },
+        document: { text: 'Document extraction', bars: [24, 20, 18, 14] }
+      },
+      data: {
+        structured: { text: 'Relational schema', bars: [24, 24, 16, 16] },
+        mixed: { text: 'Text + table blend', bars: [18, 26, 14, 22] },
+        stream: { text: 'Event stream pulse', bars: [10, 22, 28, 18] },
+        docs: { text: 'Unstructured files', bars: [26, 14, 20, 12] }
+      },
+      intelligence: {
+        llm: { text: 'Contextual answer chain', bars: [16, 22, 26, 20] },
+        predictive: { text: 'Prediction confidence', bars: [12, 20, 24, 28] },
+        rules: { text: 'Rules + anomaly checks', bars: [26, 18, 12, 24] },
+        agentic: { text: 'Multi-step automation', bars: [14, 24, 20, 26] }
+      },
+      ui: {
+        'web-app': { text: 'Workspace layout', bars: [26, 20, 16, 12] },
+        'customer-portal': { text: 'Customer journey cards', bars: [16, 24, 14, 22] },
+        mobile: { text: 'Phone-first quick actions', bars: [22, 14, 26, 18] },
+        platform: { text: 'Analytics board', bars: [12, 20, 28, 24] }
+      }
+    };
 
     function titleize(value) {
-      return value.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-    }
-
-    function getSolutionType(ui) {
-      if (ui === 'power-bi') return 'Power BI Dashboard';
-      if (ui === 'mobile') return 'Mobile Application';
-      if (ui === 'website') return 'Website';
-      if (ui === 'platform') return 'Platform';
-      return 'Web Application';
+      return value
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, (char) => char.toUpperCase());
     }
 
     function buildConcept(problem, data, intelligence, ui) {
-      const solutionType = getSolutionType(ui);
+      const solutionType = ui === 'power-bi' ? 'Dashboard' : (ui === 'mobile-app' ? 'Mobile App' : 'App');
       const name = `${titleize(problem)} ${solutionType}`;
-      const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built with ${titleize(data).toLowerCase()} data.`;
+
+      const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built for ${titleize(ui).toLowerCase()} experiences using ${titleize(data).toLowerCase()} data.`;
 
       const features = [
-        `Live ${titleize(problem)} workflows with clear priority scoring`,
+        `Live ${titleize(problem)} dashboard with clear priority scoring`,
         `${titleize(data)} ingestion pipeline with governance checks`,
-        `${titleize(intelligence)} decision engine with explainability`,
-        `${solutionType} experience with role-based actions and alerts`
+        `${titleize(intelligence)} decision engine with explainability panel`,
+        `${titleize(ui)} interface with role-based actions and alerts`
       ];
 
       return { name, description, features, solutionType };
     }
 
-    function buildPowerBIPreview() {
-      return `
-        <div class="pbi-title">Power BI Dashboard Mockup</div>
-        <div class="pbi-top-row">
-          <div class="pbi-card"><strong>KPI 1</strong><br/>Conversion</div>
-          <div class="pbi-card"><strong>KPI 2</strong><br/>Avg. Handle Time</div>
-          <div class="pbi-card"><strong>KPI 3</strong><br/>Escalations</div>
-        </div>
-        <div class="pbi-chart">
-          <span class="pbi-bar" style="left:8%;height:28px"></span>
-          <span class="pbi-bar" style="left:22%;height:52px"></span>
-          <span class="pbi-bar" style="left:36%;height:36px"></span>
-          <span class="pbi-bar" style="left:50%;height:60px"></span>
-          <span class="pbi-bar" style="left:64%;height:40px"></span>
-          <span class="pbi-bar" style="left:78%;height:67px"></span>
-        </div>
+    function renderChoiceGraphic(field, value) {
+      const config = graphicPresets[field][value];
+      const barHtml = config.bars
+        .map((height) => `<span class="bar" style="height:${height}px"></span>`)
+        .join('');
+      graphics[field].innerHTML = `
+        <small>${config.text}</small>
+        <div class="graphic-row">${barHtml}</div>
       `;
     }
 
-    function buildMobilePreview() {
-      return `
-        <div class="phone-shell">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="phone-pill" style="width: 68%;"></div>
-            <div class="phone-pill" style="width: 100%; height: 54px; border-radius: 10px;"></div>
-            <div class="phone-pill" style="width: 82%;"></div>
-            <div class="phone-pill" style="width: 92%;"></div>
-            <div class="phone-pill" style="width: 58%;"></div>
-          </div>
-        </div>
+    function renderProblemShape(problem) {
+      const fill = colorPalette.problem[problem];
+      const path = problemShapes[problem];
+      problemShape.innerHTML = `
+        <rect x="3" y="3" width="114" height="74" rx="10" ry="10" fill="#0b1825" stroke="#35506a" />
+        <path d="${path}" fill="${fill}" stroke="#d9ebfb" stroke-width="2" />
       `;
     }
 
-    function buildGenericPreview(solutionType) {
-      return `
-        <div class="pbi-title">${solutionType} Mockup</div>
-        <div class="mini-grid">
-          <div class="tile"></div>
-          <div class="tile"></div>
-          <div class="tile"></div>
-          <div class="tile"></div>
-          <div class="tile"></div>
-          <div class="tile"></div>
-        </div>
-      `;
+    function renderUiMock(ui) {
+      const templates = {
+        'web-app': `
+          <div class="mock-line" style="width:68%"></div>
+          <div class="mock-grid"><div class="mock-cell"></div><div class="mock-cell"></div><div class="mock-cell"></div></div>
+        `,
+        'customer-portal': `
+          <div class="mock-line" style="width:54%"></div>
+          <div class="mock-grid"><div class="mock-cell"></div><div class="mock-cell"></div><div class="mock-cell"></div></div>
+          <div class="mock-line" style="width:85%"></div>
+        `,
+        mobile: `
+          <div class="mock-line" style="width:42%"></div>
+          <div class="mock-line" style="width:70%"></div>
+          <div class="mock-line" style="width:55%"></div>
+        `,
+        platform: `
+          <div class="mock-grid"><div class="mock-cell"></div><div class="mock-cell"></div><div class="mock-cell"></div></div>
+          <div class="mock-grid"><div class="mock-cell"></div><div class="mock-cell"></div><div class="mock-cell"></div></div>
+        `
+      };
+      uiMock.innerHTML = templates[ui];
     }
 
     function render() {
@@ -431,13 +593,14 @@
       solutionDesc.textContent = concept.description;
       windowLabel.textContent = `${concept.solutionType} Preview`;
 
-      if (selected.ui === 'power-bi') {
-        dynamicPreview.innerHTML = buildPowerBIPreview();
-      } else if (selected.ui === 'mobile') {
-        dynamicPreview.innerHTML = buildMobilePreview();
-      } else {
-        dynamicPreview.innerHTML = buildGenericPreview(concept.solutionType);
-      }
+      Object.entries(selected).forEach(([field, value]) => {
+        pieces[field].style.background = colorPalette[field][value];
+        renderChoiceGraphic(field, value);
+      });
+      renderProblemShape(selected.problem);
+
+      appWindow.className = `app-window ui-${selected.ui}`;
+      renderUiMock(selected.ui);
 
       featureList.innerHTML = '';
       concept.features.forEach((feature) => {
