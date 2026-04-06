@@ -251,7 +251,7 @@
     .mock-line {
       height: 8px;
       border-radius: 999px;
-      background: #406788;
+      background: #406788;aa
       opacity: 0.85;
     }
 
@@ -361,9 +361,8 @@
           <label for="ui">4) UI</label>
           <select id="ui">
             <option value="web-app">Internal Web App</option>
-            <option value="customer-portal">Customer Website</option>
-            <option value="mobile">Mobile Companion</option>
-            <option value="platform">Analytics Platform</option>
+            <option value="power-bi">Power BI Dashboard</option>
+            <option value="mobile-app">Mobile Application</option>
           </select>
           <div class="choice-graphic" id="uiGraphic"></div>
         </div>
@@ -514,7 +513,7 @@
     }
 
     function buildConcept(problem, data, intelligence, ui) {
-      const solutionType = ui === 'platform' ? 'Platform' : (ui === 'customer-portal' ? 'Website' : 'App');
+      const solutionType = ui === 'power-bi' ? 'Dashboard' : (ui === 'mobile-app' ? 'Mobile App' : 'App');
       const name = `${titleize(problem)} ${solutionType}`;
 
       const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built for ${titleize(ui).toLowerCase()} experiences using ${titleize(data).toLowerCase()} data.`;
