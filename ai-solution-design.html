@@ -38,6 +38,29 @@
       margin-bottom: 26px;
     }
 
+    .intro-row {
+      margin: -14px 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .analogy {
+      margin: 0;
+      color: #c9d9ea;
+      font-size: 0.98rem;
+      max-width: 900px;
+    }
+
+    .intro-guide {
+      margin: 0 0 18px;
+      color: #c6d8ea;
+      font-size: 0.93rem;
+      display: grid;
+      gap: 4px;
+    }
+
     .layout {
       display: grid;
       grid-template-columns: minmax(320px, 1fr) minmax(330px, 1fr);
@@ -81,12 +104,43 @@
       font-size: 0.92rem;
     }
 
+    .selection-details {
+      margin-top: 8px;
+      border: 1px solid #30465d;
+      border-radius: 10px;
+      background: #0d1824;
+      padding: 10px 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .selection-details p {
+      margin: 0;
+      font-size: 0.86rem;
+      color: #c6d8eb;
+    }
+
+    .selection-details strong {
+      color: #e7eef7;
+    }
+
+    .lego-icon {
+      flex: 0 0 auto;
+      width: 90px;
+      height: 48px;
+      border: 1px solid #35506a;
+      border-radius: 10px;
+      background: #0d1824;
+      padding: 5px;
+    }
+
     .app-window {
       border: 1px solid #3a516a;
       border-radius: 12px;
       overflow: hidden;
       background: #121b26;
       min-height: 370px;
+      transition: all 220ms ease;
     }
 
     .window-top {
@@ -148,6 +202,52 @@
       font-size: 0.92rem;
     }
 
+    #uiMock {
+      border: 1px solid #34506a;
+      border-radius: 10px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      background: #0d1b29;
+    }
+
+    .mock-line {
+      height: 8px;
+      border-radius: 999px;
+      background: #406788;
+      opacity: 0.85;
+    }
+
+    .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .mock-cell {
+      height: 30px;
+      border-radius: 7px;
+      background: #1e3448;
+      border: 1px solid #35506a;
+    }
+
+    .app-window.ui-web-app {
+      background: linear-gradient(180deg, #12202f 0%, #0f1822 100%);
+    }
+
+    .app-window.ui-power-bi {
+      background: linear-gradient(180deg, #2c250f 0%, #1b1710 100%);
+      border-color: #a17e1f;
+    }
+
+    .app-window.ui-mobile-app {
+      max-width: 360px;
+      margin: 0 auto;
+      border-radius: 26px;
+      border-width: 2px;
+      background: linear-gradient(180deg, #151824 0%, #0c0f16 100%);
+    }
+
     ul {
       margin: 0;
       padding-left: 20px;
@@ -173,9 +273,29 @@
 <body>
   <main>
     <h1>AI Solution Design</h1>
-    <p class="muted">
-      Select <strong>Problem</strong>, <strong>Data</strong>, <strong>Intelligence</strong>, and <strong>UI</strong> to generate a suggested app, website, or platform concept.
-    </p>
+    <div class="intro-row">
+      <p class="analogy">
+        Designing AI solutions is like playing with Legos: the business defines the final shape, but you choose which pieces to combine.
+      </p>
+      <svg class="lego-icon" viewBox="0 0 120 60" aria-label="Lego structure with one missing block">
+        <rect x="8" y="26" width="34" height="24" rx="4" fill="#38bdf8" />
+        <rect x="44" y="26" width="34" height="24" rx="4" fill="#f59e0b" />
+        <rect x="80" y="26" width="32" height="24" rx="4" fill="#334155" stroke="#64748b" stroke-dasharray="3 3" />
+        <rect x="26" y="8" width="34" height="16" rx="4" fill="#22d3ee" />
+        <circle cx="20" cy="30" r="3" fill="#e7eef7" />
+        <circle cx="30" cy="30" r="3" fill="#e7eef7" />
+        <circle cx="56" cy="30" r="3" fill="#e7eef7" />
+        <circle cx="66" cy="30" r="3" fill="#e7eef7" />
+      </svg>
+    </div>
+    <div class="intro-guide">
+      <div><strong>Problem</strong> — What does your business need?</div>
+      <div><strong>Data</strong> — What is your source of information?</div>
+      <div><strong>Intelligence</strong> — How should the information be processed?</div>
+      <div><strong>Governance</strong> — How much control, monitoring, and compliance is required?</div>
+      <div><strong>UI</strong> — How should users access the insights?</div>
+    </div>
+    <p class="muted">Select <strong>Problem</strong>, <strong>Data</strong>, <strong>Intelligence</strong>, <strong>Governance</strong>, and <strong>UI</strong> to generate a suggested app, website, or platform concept.</p>
 
     <div class="layout">
       <section class="panel" aria-label="Design Controls">
@@ -187,6 +307,7 @@
             <option value="sales-forecast">Sales Forecasting</option>
             <option value="document">Document Intelligence</option>
           </select>
+          <div class="selection-details" id="problemDetails"></div>
         </div>
 
         <div class="field">
@@ -197,6 +318,7 @@
             <option value="stream">Real-Time Event Stream</option>
             <option value="docs">PDFs, Emails, and Docs</option>
           </select>
+          <div class="selection-details" id="dataDetails"></div>
         </div>
 
         <div class="field">
@@ -207,16 +329,27 @@
             <option value="rules">Rules + Anomaly Engine</option>
             <option value="agentic">Agentic Workflow</option>
           </select>
+          <div class="selection-details" id="intelligenceDetails"></div>
         </div>
 
         <div class="field">
-          <label for="ui">4) UI</label>
+          <label for="governance">4) Governance</label>
+          <select id="governance">
+            <option value="none">No Governance</option>
+            <option value="monitoring">Monitoring</option>
+            <option value="heavy">Heavy Governance</option>
+          </select>
+          <div class="selection-details" id="governanceDetails"></div>
+        </div>
+
+        <div class="field">
+          <label for="ui">5) UI</label>
           <select id="ui">
             <option value="web-app">Internal Web App</option>
-            <option value="customer-portal">Customer Website</option>
-            <option value="mobile">Mobile Companion</option>
-            <option value="platform">Analytics Platform</option>
+            <option value="power-bi">Power BI Dashboard</option>
+            <option value="mobile-app">Mobile Application</option>
           </select>
+          <div class="selection-details" id="uiDetails"></div>
         </div>
 
         <p class="helper">
@@ -225,7 +358,7 @@
       </section>
 
       <section class="panel" aria-label="Preview Window">
-        <div class="app-window" role="status" aria-live="polite">
+        <div class="app-window ui-web-app" id="appWindow" role="status" aria-live="polite">
           <div class="window-top">
             <span class="dot red"></span>
             <span class="dot yellow"></span>
@@ -238,6 +371,7 @@
               <h2 class="preview-title" id="solutionName"></h2>
               <p class="preview-desc" id="solutionDesc"></p>
             </div>
+            <div id="uiMock"></div>
             <div class="preview-box">
               <h2 class="preview-title">Core Capabilities</h2>
               <ul id="featureList"></ul>
@@ -257,6 +391,7 @@
       problem: document.getElementById('problem'),
       data: document.getElementById('data'),
       intelligence: document.getElementById('intelligence'),
+      governance: document.getElementById('governance'),
       ui: document.getElementById('ui')
     };
 
@@ -265,6 +400,118 @@
     const solutionDesc = document.getElementById('solutionDesc');
     const featureList = document.getElementById('featureList');
     const windowLabel = document.getElementById('windowLabel');
+    const appWindow = document.getElementById('appWindow');
+    const uiMock = document.getElementById('uiMock');
+    const details = {
+      problem: document.getElementById('problemDetails'),
+      data: document.getElementById('dataDetails'),
+      intelligence: document.getElementById('intelligenceDetails'),
+      governance: document.getElementById('governanceDetails'),
+      ui: document.getElementById('uiDetails')
+    };
+
+    const detailMap = {
+      problem: {
+        'customer-support': {
+          useCase: 'Automate repetitive support tickets and speed up responses.',
+          pros: 'Improves resolution speed and consistency.',
+          cons: 'Requires careful fallback for complex customer issues.'
+        },
+        fraud: {
+          useCase: 'Flag suspicious transactions for analysts in near real time.',
+          pros: 'Reduces fraud losses and improves investigator focus.',
+          cons: 'Can create false positives if thresholds are too strict.'
+        },
+        'sales-forecast': {
+          useCase: 'Predict demand and revenue trends for planning cycles.',
+          pros: 'Supports better inventory and staffing decisions.',
+          cons: 'Forecast quality depends on clean historical data.'
+        },
+        document: {
+          useCase: 'Extract and classify information from contracts and forms.',
+          pros: 'Cuts manual review effort and improves throughput.',
+          cons: 'Edge-case documents may still need human review.'
+        }
+      },
+      data: {
+        structured: {
+          useCase: 'Use governed SQL tables for reliable analytics and models.',
+          pros: 'High consistency and easier quality checks.',
+          cons: 'Less flexible for unstructured signals.'
+        },
+        mixed: {
+          useCase: 'Combine tabular records with text context for richer insights.',
+          pros: 'Captures both numerical and contextual signals.',
+          cons: 'More complex preprocessing and schema management.'
+        },
+        stream: {
+          useCase: 'Process live event data for immediate detection and actions.',
+          pros: 'Low-latency decision making.',
+          cons: 'Requires strong monitoring and resilience design.'
+        },
+        docs: {
+          useCase: 'Ingest documents, emails, and PDFs for downstream automation.',
+          pros: 'Unlocks high-value information from unstructured content.',
+          cons: 'Extraction accuracy can vary by format quality.'
+        }
+      },
+      intelligence: {
+        llm: {
+          useCase: 'Answer questions with context-aware retrieval and generation.',
+          pros: 'Great for natural language workflows and summarization.',
+          cons: 'Needs guardrails for hallucination and sensitive data.'
+        },
+        predictive: {
+          useCase: 'Score outcomes such as risk, demand, or churn probability.',
+          pros: 'Strong at pattern detection and prioritization.',
+          cons: 'Requires ongoing retraining and drift monitoring.'
+        },
+        rules: {
+          useCase: 'Apply deterministic policies with anomaly screening.',
+          pros: 'Transparent logic and easy auditability.',
+          cons: 'May miss novel patterns beyond known rules.'
+        },
+        agentic: {
+          useCase: 'Coordinate multi-step tasks across systems with approvals.',
+          pros: 'Can automate end-to-end workflows.',
+          cons: 'Higher operational complexity and governance overhead.'
+        }
+      },
+      governance: {
+        none: {
+          useCase: 'Early exploration when speed matters more than controls.',
+          pros: 'Fastest rollout with minimal process overhead.',
+          cons: 'Higher operational and compliance risk.'
+        },
+        monitoring: {
+          useCase: 'Balanced delivery with observability and policy checks.',
+          pros: 'Good control without slowing teams too much.',
+          cons: 'Requires alert tuning and ownership discipline.'
+        },
+        heavy: {
+          useCase: 'Regulated production systems with strict approval gates.',
+          pros: 'Strong auditability, traceability, and risk management.',
+          cons: 'Slower change velocity and higher maintenance effort.'
+        }
+      },
+      ui: {
+        'web-app': {
+          useCase: 'Internal teams manage workflows, exceptions, and approvals.',
+          pros: 'Fast iteration and role-based controls.',
+          cons: 'Usually optimized for desktop-first usage.'
+        },
+        'power-bi': {
+          useCase: 'Business users monitor KPIs and trends through dashboards.',
+          pros: 'Strong executive reporting and interactive slicing.',
+          cons: 'Limited for complex workflow actions.'
+        },
+        'mobile-app': {
+          useCase: 'Field users receive alerts and take quick actions on the go.',
+          pros: 'High accessibility and rapid response.',
+          cons: 'Small screens limit dense analysis.'
+        }
+      }
+    };
 
     function titleize(value) {
       return value
@@ -272,20 +519,41 @@
         .replace(/\b\w/g, (char) => char.toUpperCase());
     }
 
-    function buildConcept(problem, data, intelligence, ui) {
-      const solutionType = ui === 'platform' ? 'Platform' : (ui === 'customer-portal' ? 'Website' : 'App');
+    function buildConcept(problem, data, intelligence, governance, ui) {
+      const solutionType = ui === 'power-bi' ? 'Dashboard' : (ui === 'mobile-app' ? 'Mobile App' : 'App');
       const name = `${titleize(problem)} ${solutionType}`;
 
-      const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built for ${titleize(ui).toLowerCase()} experiences using ${titleize(data).toLowerCase()} data.`;
+      const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built for ${titleize(ui).toLowerCase()} experiences using ${titleize(data).toLowerCase()} data with a ${titleize(governance).toLowerCase()} governance model.`;
 
       const features = [
         `Live ${titleize(problem)} dashboard with clear priority scoring`,
         `${titleize(data)} ingestion pipeline with governance checks`,
         `${titleize(intelligence)} decision engine with explainability panel`,
+        `${titleize(governance)} controls for monitoring, approvals, and audit`,
         `${titleize(ui)} interface with role-based actions and alerts`
       ];
 
       return { name, description, features, solutionType };
+    }
+
+    function renderUiMock(ui) {
+      const templates = {
+        'web-app': `
+          <div class="mock-line" style="width:68%"></div>
+          <div class="mock-grid"><div class="mock-cell"></div><div class="mock-cell"></div><div class="mock-cell"></div></div>
+        `,
+        'power-bi': `
+          <div class="mock-grid"><div class="mock-cell"></div><div class="mock-cell"></div><div class="mock-cell"></div></div>
+          <div class="mock-line" style="width:90%"></div>
+          <div class="mock-grid"><div class="mock-cell"></div><div class="mock-cell"></div><div class="mock-cell"></div></div>
+        `,
+        'mobile-app': `
+          <div class="mock-line" style="width:42%"></div>
+          <div class="mock-line" style="width:70%"></div>
+          <div class="mock-line" style="width:55%"></div>
+        `
+      };
+      uiMock.innerHTML = templates[ui];
     }
 
     function render() {
@@ -293,6 +561,7 @@
         problem: controls.problem.value,
         data: controls.data.value,
         intelligence: controls.intelligence.value,
+        governance: controls.governance.value,
         ui: controls.ui.value
       };
 
@@ -304,10 +573,22 @@
         selectionSummary.appendChild(chip);
       });
 
-      const concept = buildConcept(selected.problem, selected.data, selected.intelligence, selected.ui);
+      const concept = buildConcept(selected.problem, selected.data, selected.intelligence, selected.governance, selected.ui);
       solutionName.textContent = concept.name;
       solutionDesc.textContent = concept.description;
       windowLabel.textContent = `${concept.solutionType} Preview`;
+
+      appWindow.className = `app-window ui-${selected.ui}`;
+      renderUiMock(selected.ui);
+
+      Object.entries(selected).forEach(([field, value]) => {
+        const entry = detailMap[field][value];
+        details[field].innerHTML = `
+          <p><strong>Use case:</strong> ${entry.useCase}</p>
+          <p><strong>Pros:</strong> ${entry.pros}</p>
+          <p><strong>Cons:</strong> ${entry.cons}</p>
+        `;
+      });
 
       featureList.innerHTML = '';
       concept.features.forEach((feature) => {
