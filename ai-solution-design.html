@@ -53,6 +53,14 @@
       max-width: 900px;
     }
 
+    .intro-guide {
+      margin: 0 0 18px;
+      color: #c6d8ea;
+      font-size: 0.93rem;
+      display: grid;
+      gap: 4px;
+    }
+
     .layout {
       display: grid;
       grid-template-columns: minmax(320px, 1fr) minmax(330px, 1fr);
@@ -267,7 +275,7 @@
     <h1>AI Solution Design</h1>
     <div class="intro-row">
       <p class="analogy">
-        Designing AI solutions is like playing with Legos. Your final shape is determined by the business, but which Legos you combine is up to you.
+        Designing AI solutions is like playing with Legos: the business defines the final shape, but you choose which pieces to combine.
       </p>
       <svg class="lego-icon" viewBox="0 0 120 60" aria-label="Lego structure with one missing block">
         <rect x="8" y="26" width="34" height="24" rx="4" fill="#38bdf8" />
@@ -280,7 +288,14 @@
         <circle cx="66" cy="30" r="3" fill="#e7eef7" />
       </svg>
     </div>
-    <p class="muted">Select <strong>Problem</strong>, <strong>Data</strong>, <strong>Intelligence</strong>, and <strong>UI</strong> to generate a suggested app, website, or platform concept.</p>
+    <div class="intro-guide">
+      <div><strong>Problem</strong> — What does your business need?</div>
+      <div><strong>Data</strong> — What is your source of information?</div>
+      <div><strong>Intelligence</strong> — How should the information be processed?</div>
+      <div><strong>Governance</strong> — How much control, monitoring, and compliance is required?</div>
+      <div><strong>UI</strong> — How should users access the insights?</div>
+    </div>
+    <p class="muted">Select <strong>Problem</strong>, <strong>Data</strong>, <strong>Intelligence</strong>, <strong>Governance</strong>, and <strong>UI</strong> to generate a suggested app, website, or platform concept.</p>
 
     <div class="layout">
       <section class="panel" aria-label="Design Controls">
