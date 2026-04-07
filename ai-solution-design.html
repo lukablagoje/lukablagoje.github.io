@@ -318,7 +318,17 @@
         </div>
 
         <div class="field">
-          <label for="ui">4) UI</label>
+          <label for="governance">4) Governance</label>
+          <select id="governance">
+            <option value="none">No Governance</option>
+            <option value="monitoring">Monitoring</option>
+            <option value="heavy">Heavy Governance</option>
+          </select>
+          <div class="selection-details" id="governanceDetails"></div>
+        </div>
+
+        <div class="field">
+          <label for="ui">5) UI</label>
           <select id="ui">
             <option value="web-app">Internal Web App</option>
             <option value="power-bi">Power BI Dashboard</option>
@@ -366,6 +376,7 @@
       problem: document.getElementById('problem'),
       data: document.getElementById('data'),
       intelligence: document.getElementById('intelligence'),
+      governance: document.getElementById('governance'),
       ui: document.getElementById('ui')
     };
 
@@ -380,6 +391,7 @@
       problem: document.getElementById('problemDetails'),
       data: document.getElementById('dataDetails'),
       intelligence: document.getElementById('intelligenceDetails'),
+      governance: document.getElementById('governanceDetails'),
       ui: document.getElementById('uiDetails')
     };
 
@@ -450,6 +462,23 @@
           cons: 'Higher operational complexity and governance overhead.'
         }
       },
+      governance: {
+        none: {
+          useCase: 'Early exploration when speed matters more than controls.',
+          pros: 'Fastest rollout with minimal process overhead.',
+          cons: 'Higher operational and compliance risk.'
+        },
+        monitoring: {
+          useCase: 'Balanced delivery with observability and policy checks.',
+          pros: 'Good control without slowing teams too much.',
+          cons: 'Requires alert tuning and ownership discipline.'
+        },
+        heavy: {
+          useCase: 'Regulated production systems with strict approval gates.',
+          pros: 'Strong auditability, traceability, and risk management.',
+          cons: 'Slower change velocity and higher maintenance effort.'
+        }
+      },
       ui: {
         'web-app': {
           useCase: 'Internal teams manage workflows, exceptions, and approvals.',
@@ -475,16 +504,17 @@
         .replace(/\b\w/g, (char) => char.toUpperCase());
     }
 
-    function buildConcept(problem, data, intelligence, ui) {
+    function buildConcept(problem, data, intelligence, governance, ui) {
       const solutionType = ui === 'power-bi' ? 'Dashboard' : (ui === 'mobile-app' ? 'Mobile App' : 'App');
       const name = `${titleize(problem)} ${solutionType}`;
 
-      const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built for ${titleize(ui).toLowerCase()} experiences using ${titleize(data).toLowerCase()} data.`;
+      const description = `A ${solutionType.toLowerCase()} focused on ${titleize(problem).toLowerCase()}, powered by ${titleize(intelligence).toLowerCase()} and built for ${titleize(ui).toLowerCase()} experiences using ${titleize(data).toLowerCase()} data with a ${titleize(governance).toLowerCase()} governance model.`;
 
       const features = [
         `Live ${titleize(problem)} dashboard with clear priority scoring`,
         `${titleize(data)} ingestion pipeline with governance checks`,
         `${titleize(intelligence)} decision engine with explainability panel`,
+        `${titleize(governance)} controls for monitoring, approvals, and audit`,
         `${titleize(ui)} interface with role-based actions and alerts`
       ];
 
@@ -516,6 +546,7 @@
         problem: controls.problem.value,
         data: controls.data.value,
         intelligence: controls.intelligence.value,
+        governance: controls.governance.value,
         ui: controls.ui.value
       };
 
@@ -527,7 +558,7 @@
         selectionSummary.appendChild(chip);
       });
 
-      const concept = buildConcept(selected.problem, selected.data, selected.intelligence, selected.ui);
+      const concept = buildConcept(selected.problem, selected.data, selected.intelligence, selected.governance, selected.ui);
       solutionName.textContent = concept.name;
       solutionDesc.textContent = concept.description;
       windowLabel.textContent = `${concept.solutionType} Preview`;
